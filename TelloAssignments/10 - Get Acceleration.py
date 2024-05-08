@@ -1,16 +1,17 @@
-#Vertical Triange. Gets height at specified intervals
+#Vertical Triange. Gets accel at specified intervals
 from djitellopy import tello
 import time
 import threading
 run = "yes"
 
 tello = tello.Tello()
+
 tello.connect()
-def height(): #"get height"
+def accel(): #"get accel"
 	global tello
 	while run == "yes":
 		time.sleep(1)
-		print("Height: " + str(tello.get_height()))
+		print("Acceleration - " + "X: " + str(tello.get_acceleration_x()) + "Y: " + str(tello.get_acceleration_y()) + "Z: " + str(tello.get_acceleration_z()))
 
 
 def fly(): #"commands"
@@ -27,10 +28,10 @@ def fly(): #"commands"
 
 if __name__ =="__main__":
 	commands = threading.Thread(target=fly, args=())
-	height = threading.Thread(target=height, args=())
+	accel = threading.Thread(target=accel, args=())
 
 	commands.start()
-	height.start()
+	accel.start()
 	commands.join()
 	run = "no"
 	print("Done!")
